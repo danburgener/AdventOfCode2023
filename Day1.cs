@@ -6,7 +6,7 @@ namespace AdventOfCode2023
     {
         public static async Task<long> One()
         {
-            var data = await GetDayOneData();
+            var data = await Common.ReadFile("One", "One");
             string regex = @"(\d)";
             long sum = 0;
             foreach (var item in data)
@@ -20,7 +20,7 @@ namespace AdventOfCode2023
 
         public static async Task<long> Two()
         {
-            var data = await GetDayOneData();
+            var data = await Common.ReadFile("One", "One");
             string regex = @"(\d|one|two|three|four|five|six|seven|eight|nine)";
             long sum = 0;
             foreach (var item in data)
@@ -30,12 +30,6 @@ namespace AdventOfCode2023
                 sum += rowValue;
             }
             return sum;
-        }
-
-
-        private static async Task<string[]> GetDayOneData()
-        {
-            return await File.ReadAllLinesAsync("DayOneOneData.txt");
         }
 
         private static string ConvertValue(string value)

@@ -5,7 +5,7 @@
         public static async Task<long> One()
         {
             int sum = 0;
-            var data = await GetDayFourData();
+            var data = await Common.ReadFile("Four", "One");
 
             foreach (var item in data)
             {
@@ -17,7 +17,7 @@
         public static async Task<long> Two()
         {
             int sum = 0;
-            var data = await GetDayFourTwoData();
+            var data = await Common.ReadFile("Four", "Two");
             SortedDictionary<int, int> gameCardsWinnings = new SortedDictionary<int, int>();
             SortedDictionary<int, int> gameCardsCopies = new SortedDictionary<int, int>();
 
@@ -118,16 +118,6 @@
             }
 
             return (gameNumber, winningNumbersCount);
-        }
-
-        private static async Task<string[]> GetDayFourData()
-        {
-            return await File.ReadAllLinesAsync("DayFourOneData.txt");
-        }
-
-        private static async Task<string[]> GetDayFourTwoData()
-        {
-            return await File.ReadAllLinesAsync("DayFourTwoData.txt");
         }
     }
 }

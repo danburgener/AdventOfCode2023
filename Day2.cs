@@ -9,7 +9,7 @@
             const int blue = 14;
 
             int sum = 0;
-            var data = await GetDayTwoData();
+            var data = await Common.ReadFile("Two", "One");
 
             foreach (var item in data)
             {
@@ -26,7 +26,7 @@
         public static async Task<int> Two()
         {
             int sum = 0;
-            var data = await GetDayTwoTwoData();
+            var data = await Common.ReadFile("Two", "Two");
 
             foreach (var item in data)
             {
@@ -114,16 +114,6 @@
         {
             var splitText = text.Split(" ");
             return (int.Parse(splitText[0].Trim()), splitText[1].Trim());
-        }
-
-        private static async Task<string[]> GetDayTwoData()
-        {
-            return await File.ReadAllLinesAsync("DayTwoOneData.txt");
-        }
-
-        private static async Task<string[]> GetDayTwoTwoData()
-        {
-            return await File.ReadAllLinesAsync("DayTwoTwoData.txt");
         }
     }
 }

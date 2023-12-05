@@ -7,7 +7,7 @@ namespace AdventOfCode2023
         public static async Task<long> One()
         {
             int sum = 0;
-            var dataString = await GetDayOneData();
+            var dataString = await Common.ReadFile("Three", "One");
             var dataDict = GetDataDict(dataString);
             foreach (var row in dataDict)
             {
@@ -33,7 +33,7 @@ namespace AdventOfCode2023
         public static async Task<long> Two()
         {
             int sum = 0;
-            var dataString = await GetDayTwoData();
+            var dataString = await Common.ReadFile("Three", "Two");
             var dataDict = GetStarDataDict(dataString);
             foreach (var row in dataDict)
             {
@@ -305,17 +305,6 @@ namespace AdventOfCode2023
             }
 
             return dataDict;
-        }
-
-
-        private static async Task<string[]> GetDayOneData()
-        {
-            return await File.ReadAllLinesAsync("DayThreeOneData.txt");
-        }
-
-        private static async Task<string[]> GetDayTwoData()
-        {
-            return await File.ReadAllLinesAsync("DayThreeTwoData.txt");
         }
 
         private class Data

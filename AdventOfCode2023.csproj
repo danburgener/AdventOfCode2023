@@ -8,31 +8,31 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="DayFiveTwoData.txt">
+    <None Update="Files\DayFiveTwoData.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="DayFiveOneData.txt">
+    <None Update="Files\DayFiveOneData.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="DayFourTwoData.txt">
+    <None Update="Files\DayFourTwoData.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="DayFourOneData.txt">
+    <None Update="Files\DayFourOneData.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="DayThreeTwoData.txt">
+    <None Update="Files\DayThreeTwoData.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="DayThreeOneData.txt">
+    <None Update="Files\DayThreeOneData.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="DayTwoTwoData.txt">
+    <None Update="Files\DayTwoTwoData.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="DayTwoOneData.txt">
+    <None Update="Files\DayTwoOneData.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="DayOneOneData.txt">
+    <None Update="Files\DayOneOneData.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

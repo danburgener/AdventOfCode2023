@@ -4,7 +4,7 @@
     {
         public static async Task<long> One()
         {
-            var data = await GetDayOneData();
+            var data = await Common.ReadFile("Five", "One");
             var parsedData = ParseData(data);
             long? veryLowestNumber = null;
             foreach (var seed in parsedData.Seeds)
@@ -49,7 +49,7 @@
 
         public static async Task<long> Two()
         {
-            var data = await GetDayTwoData();
+            var data = await Common.ReadFile("Five", "Two");
             var parsedData = ParseData(data);
             long? veryLowestNumber = null;
             for (int i = 0; i < parsedData.Seeds.Count; i++)
@@ -181,16 +181,6 @@
             public long DestRangeStart { get; set; }
             public long SourceRangeStart { get; set; }
             public long RangeLength { get; set; }
-        }
-
-        private static async Task<string[]> GetDayOneData()
-        {
-            return await File.ReadAllLinesAsync("DayFiveOneData.txt");
-        }
-
-        private static async Task<string[]> GetDayTwoData()
-        {
-            return await File.ReadAllLinesAsync("DayFiveTwoData.txt");
         }
     }
 }

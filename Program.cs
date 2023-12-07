@@ -20,6 +20,10 @@
 //Console.WriteLine($"{nameof(Day5.One)}: {await Day5.One()}");
 //Console.WriteLine($"{nameof(Day5.Two)}: {await Day5.Two()}");
 
-Console.WriteLine("Day 6");
-Console.WriteLine($"{nameof(Day6.One)}: {await Day6.One()}");
-Console.WriteLine($"{nameof(Day6.Two)}: {await Day6.Two()}");
+//Console.WriteLine("Day 6");
+//Console.WriteLine($"{nameof(Day6.One)}: {await Day6.One()}");
+//Console.WriteLine($"{nameof(Day6.Two)}: {await Day6.Two()}");
+
+Console.WriteLine("Day 7");
+Console.WriteLine($"{nameof(Day7.One)}: {await Day7.One()}");
+Console.WriteLine($"{nameof(Day7.Two)}: {await Day7.Two()}");

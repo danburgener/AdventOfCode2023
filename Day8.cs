@@ -68,6 +68,7 @@
             return steps;
         }
 
+        //https://www.geeksforgeeks.org/lcm-of-given-array-elements/
         public static long lcm_of_array_elements(int[] element_array)
         {
             long lcm_of_array_elements = 1;

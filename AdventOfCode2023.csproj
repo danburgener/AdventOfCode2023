@@ -12,9 +12,17 @@
     <None Remove="Files\DayEightTwoData.txt" />
     <None Remove="Files\DayNineOneData.txt" />
     <None Remove="Files\DayNineTwoData.txt" />
+    <None Remove="Files\DayTenOneData.txt" />
+    <None Remove="Files\DayTenTwoData.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Files\DayTenTwoData.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\DayTenOneData.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\DayNineTwoData.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

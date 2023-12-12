@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace AdventOfCode2023
 {
@@ -30,6 +25,17 @@ namespace AdventOfCode2023
             List<string> possibles = GeneratePossibles(splitItem[0]);
 
             List<int> damagedRecords = splitItem[1].Split(',').Select(x => int.Parse(x)).ToList();
+            int arragements = CalculateArragements(damagedRecords, possibles);
+            return arragements;
+        }
+
+        private static int CalculateArrangementsV2(string item)
+        {
+            var splitItem = item.Split(' ');
+            List<string> possibles = GeneratePossibles(string.Join(Unknown, splitItem[0], splitItem[0], splitItem[0], splitItem[0], splitItem[0]));
+
+            var damagedRecordsSplit = string.Join(",", splitItem[1], splitItem[1], splitItem[1], splitItem[1], splitItem[1]);
+            List<int> damagedRecords = damagedRecordsSplit.Split(',').Select(x => int.Parse(x)).ToList();
             int arragements = CalculateArragements(damagedRecords, possibles);
             return arragements;
         }
@@ -95,8 +101,12 @@ namespace AdventOfCode2023
         public static async Task<long> Two()
         {
             var data = await Common.ReadFile("Twelve", "Two");
-
             var sum = 0;
+            foreach (var item in data)
+            {
+                sum += CalculateArrangementsV2(item);
+            }
+
             return sum;
         }
     }

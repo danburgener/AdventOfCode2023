@@ -41,5 +41,5 @@
 //Console.WriteLine($"{nameof(Day10.Two)}: {await Day10.Two()}");
 
 Console.WriteLine("Day 11");
-Console.WriteLine($"{nameof(Day11.One)}: {await Day11.One()}");
+//Console.WriteLine($"{nameof(Day11.One)}: {await Day11.One()}");
 Console.WriteLine($"{nameof(Day11.Two)}: {await Day11.Two()}");

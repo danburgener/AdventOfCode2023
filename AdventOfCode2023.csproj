@@ -16,9 +16,17 @@
     <None Remove="Files\DayNineTwoData.txt" />
     <None Remove="Files\DayTenOneData.txt" />
     <None Remove="Files\DayTenTwoData.txt" />
+    <None Remove="Files\DayTwelveOneData.txt" />
+    <None Remove="Files\DayTwelveTwoData.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Files\DayTwelveTwoData.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\DayTwelveOneData.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\DayElevenTwoData.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -82,6 +90,10 @@
     <Content Include="Files\DayTwoTwoData.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Combinatorics" Version="2.0.0" />
   </ItemGroup>
 
 </Project>

@@ -212,38 +212,23 @@ namespace AdventOfCode2023
         public static async Task<long> Two()
         {
             var data = await Common.ReadFile("Ten", "Two");
+            Node starting = GetStartingNodeAndSetNeighbors(data);
+
+            List<Node> path = GetPath(starting);
+
+            double area = CalculateArea(path);
+            double containing = GetContaining(area, path.Count - 1);
+
+            return (int)containing;
+        }
+
+        private static Node GetStartingNodeAndSetNeighbors(string[] data)
+        {
             List<List<Node>> list = new();
             for (int i = 0; i < data.Length; i++)
             {
-                list.Add(data[i].Select(x => new Node(x)).ToList());
+                list.Add(data[i].Select((x, index) => new Node(x, i, index)).ToList());
             }
-            CalculateDistances(SetNeighborsAndGetStart(list));
-            int numberOfContainingNodes = FindContainingNodes(list);
-            
-            //TEST should be 4
-
-
-            return numberOfContainingNodes;
-        }
-
-        private static int FindContainingNodes(List<List<Node>> list)
-        {
-            int notPartOfPath = 0;
-            for (int row = 0; row < list.Count; row++)
-            {
-                for (int column = 0; column < list[row].Count; column++)
-                {
-                    if (list[row][column].DistanceFromStart is null)
-                    {
-                        notPartOfPath++;
-                    }
-                }
-            }
-            return notPartOfPath;
-        }
-
-        private static Node SetNeighborsAndGetStart(List<List<Node>> list)
-        {
             Node starting = new('S');
             for (int row = 0; row < list.Count; row++)
             {
@@ -256,38 +241,59 @@ namespace AdventOfCode2023
                     }
                 }
             }
+
             return starting;
         }
 
-        private static void CalculateDistances(Node starting)
+        private static List<Node> GetPath(Node starting)
         {
-            starting.DistanceFromStart = 0;
+            List<Node> path = new()
+            {
+                starting
+            };
             var neighborToCheck = starting.Neighbors.First();
             var previous = starting;
-            while (neighborToCheck is not null)
+            do
             {
-                neighborToCheck.DistanceFromStart = previous.DistanceFromStart + 1;
-                var newNeightbor = neighborToCheck.Neighbors.Where(n => n != previous && n.Character != 'S').FirstOrDefault();
-                previous = neighborToCheck;
-                neighborToCheck = newNeightbor;
-            }
-
-            neighborToCheck = starting.Neighbors.Last();
-            previous = starting;
-            while (neighborToCheck is not null)
-            {
-                neighborToCheck.DistanceFromStart = previous.DistanceFromStart + 1;
-                var newNeightbor = neighborToCheck.Neighbors.Where(n => n != previous && n.Character != 'S').FirstOrDefault();
-                if (newNeightbor.DistanceFromStart < neighborToCheck.DistanceFromStart)
+                path.Add(neighborToCheck);
+                if (neighborToCheck.Neighbors[0] == previous)
                 {
-                    return;
+                    previous = neighborToCheck;
+                    neighborToCheck = neighborToCheck.Neighbors[1];
                 }
                 else
                 {
                     previous = neighborToCheck;
-                    neighborToCheck = newNeightbor;
+                    neighborToCheck = neighborToCheck.Neighbors[0];
+
                 }
+            } while (starting != neighborToCheck);
+            path.Add(starting);
+            return path;
+        }
+
+        //Uses Pick's Theorem (A = I + B/2 - 1)
+        private static double GetContaining(double area, int pointsCount)
+        {
+            return -((pointsCount / 2) - 1 - area);
+        }
+
+        //Uses Shoelace method (Gauss's Area Formula)
+        private static double CalculateArea(List<Node> list)
+        {
+            int forwardSum = 0;
+            for (var i = 0; i < list.Count-1; i++)
+            {
+                forwardSum += list[i].Row * list[i + 1].Column;
             }
+
+            int backwardsSum = 0;
+            for (var i = list.Count - 1; i > 0; i--)
+            {
+                backwardsSum += list[i].Row * list[i - 1].Column;
+            }
+            ;
+            return Math.Abs(forwardSum - backwardsSum) / 2;
         }
 
         private class Node
@@ -296,6 +302,14 @@ namespace AdventOfCode2023
             {
                 Character = character;
             }
+            public Node(char character, int row, int column)
+            {
+                Character = character;
+                Row = row;
+                Column = column;
+            }
+            public int Row { get; set; }
+            public int Column { get; set; }
             public char Character { get; set; }
             public List<Node> Neighbors { get; set; } = new();
             public int? DistanceFromStart { get; set; }

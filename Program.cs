@@ -34,12 +34,11 @@
 
 //Console.WriteLine("Day 9");
 //Console.WriteLine($"{nameof(Day9.One)}: {await Day9.One()}");
-//Console.WriteLine($"{nameof(Day9.Two
-//)}: {await Day9.Two()}");
+//Console.WriteLine($"{nameof(Day9.Two)}: {await Day9.Two()}");
 
-Console.WriteLine("Day 10");
+//Console.WriteLine("Day 10");
 //Console.WriteLine($"{nameof(Day10.One)}: {await Day10.One()}");
-Console.WriteLine($"{nameof(Day10.Two)}: {await Day10.Two()}");
+//Console.WriteLine($"{nameof(Day10.Two)}: {await Day10.Two()}");
 
 //Console.WriteLine("Day 11");
 //Console.WriteLine($"{nameof(Day11.One)}: {await Day11.One()}");
@@ -56,3 +55,7 @@ Console.WriteLine($"{nameof(Day10.Two)}: {await Day10.Two()}");
 //Console.WriteLine("Day 14");
 //Console.WriteLine($"{nameof(Day14.One)}: {await Day14.One()}");
 //Console.WriteLine($"{nameof(Day14.Two)}: {await Day14.Two()}");
+
+Console.WriteLine("Day 15");
+Console.WriteLine($"{nameof(Day15.One)}: {await Day15.One()}");
+Console.WriteLine($"{nameof(Day15.Two)}: {await Day15.Two()}");

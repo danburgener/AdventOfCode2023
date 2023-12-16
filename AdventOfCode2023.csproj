@@ -18,6 +18,8 @@
     <None Remove="Files\DayFourteenTwoData.txt" />
     <None Remove="Files\DayNineOneData.txt" />
     <None Remove="Files\DayNineTwoData.txt" />
+    <None Remove="Files\DaySixteenOneData.txt" />
+    <None Remove="Files\DaySixteenTwoData.txt" />
     <None Remove="Files\DayTenOneData.txt" />
     <None Remove="Files\DayTenTwoData.txt" />
     <None Remove="Files\DayThirteenOneData.txt" />
@@ -27,6 +29,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Files\DaySixteenTwoData.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\DaySixteenOneData.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\DayFiveteenTwoData.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

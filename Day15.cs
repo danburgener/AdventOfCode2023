@@ -6,7 +6,7 @@ namespace AdventOfCode2023
     {
         public static async Task<long> One()
         {
-            var data = await Common.ReadFile("Fiveteen", "One");
+            var data = await Common.ReadFile("Fifteen", "One");
             var line = data[0];
             var sequences = line.Split(',');
             var sum = 0;
@@ -32,7 +32,7 @@ namespace AdventOfCode2023
 
         public static async Task<long> Two()
         {
-            var data = await Common.ReadFile("Fiveteen", "Two");
+            var data = await Common.ReadFile("Fifteen", "Two");
             List<Box> boxes = Enumerable.Range(0, 256).Select(x => new Box()).ToList();
             var sum = 0;
             var sequences = data[0].Split(',');

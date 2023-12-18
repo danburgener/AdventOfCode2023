@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static AdventOfCode2023.Day15;
-
-namespace AdventOfCode2023
+﻿namespace AdventOfCode2023
 {
     public static class Day16
     {

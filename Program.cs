@@ -68,6 +68,10 @@
 //Console.WriteLine($"{nameof(Day17.One)}: {await Day17.One()}");
 //Console.WriteLine($"{nameof(Day17.Two)}: {await Day17.Two()}");
 
-Console.WriteLine("Day 18");
-Console.WriteLine($"{nameof(Day18.One)}: {await Day18.One()}");
-Console.WriteLine($"{nameof(Day18.Two)}: {await Day18.Two()}");
+//Console.WriteLine("Day 18");
+//Console.WriteLine($"{nameof(Day18.One)}: {await Day18.One()}");
+//Console.WriteLine($"{nameof(Day18.Two)}: {await Day18.Two()}");
+
+Console.WriteLine("Day 19");
+Console.WriteLine($"{nameof(Day19.One)}: {await Day19.One()}");
+Console.WriteLine($"{nameof(Day19.Two)}: {await Day19.Two()}");

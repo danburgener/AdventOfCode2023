@@ -9,7 +9,6 @@
             (long low, long high) pulses = (0,0);
             for(int i = 0; i < 1000; i++)
             {
-                pulses.low++;
                 PushButton(modules, ref pulses);
             }
             var sum = pulses.low * pulses.high;
@@ -19,6 +18,8 @@
         private static void PushButton(Dictionary<string, Module> modules, ref (long low, long high) pulses)
         {
             Module broadcasterModule = modules["broadcaster"];
+            //Console.WriteLine("button -low-> broadcaster");
+            pulses.low++;
             broadcasterModule.ReceivePulse(null, Pulse.Low);
             broadcasterModule.ExecuteReceivedPulse();
             List<string> destinationModuleNames = new() { broadcasterModule.Name };

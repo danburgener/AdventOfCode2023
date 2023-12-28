@@ -1,13 +1,20 @@
-﻿namespace AdventOfCode2023
+﻿using static AdventOfCode2023.Day25.Kargers;
+
+namespace AdventOfCode2023
 {
     public static class Day25
     {
         public static async Task<long> One()
         {
             var data = await Common.ReadFile("TwentyFive", "One");
-            (List<KeyValuePair<string, string>>, List<string>) components = GetComponents(data);
-            int total = ChangeConnections(components.Item1, components.Item2);
-            return total;
+
+            UndirectedGraph undirectedGraph = GetUndirectedGraph(data);
+            List<int> values = new();
+            for (var i = 0; i < 5; i++)
+            {
+                values.Add(MinCut(undirectedGraph, 0));
+            }
+            return values.OrderByDescending(x => x).First();
         }
 
         public static async Task<long> Two()
@@ -17,126 +24,151 @@
             return currentMax;
         }
 
-        private static int ChangeConnections(List<KeyValuePair<string, string>> originalConnections, List<string> nodes)
+        private static UndirectedGraph GetUndirectedGraph(string[] data)
         {
-            int result = 0;
-            var variations = new Combinatorics.Collections.Variations<KeyValuePair<string, string>>(originalConnections, 3, Combinatorics.Collections.GenerateOption.WithoutRepetition);
-            int variationsChecked = 0;
-            foreach (var variation in variations.Where(x => !(x[0].Key == x[1].Value && x[0].Value == x[1].Key) &&
-                                             !(x[1].Key == x[2].Value && x[1].Value == x[2].Key) &&
-                                             !(x[2].Key == x[0].Value && x[2].Value == x[0].Key)))
+            UndirectedGraph undirectedGraphObject = new()
             {
-                List<KeyValuePair<string, string>> newConnections = originalConnections.ToList();
-                List<(string, string)> connectionsToBreak = new(){
-                    (variation[0].Key, variation[0].Value),
-                    (variation[1].Key, variation[1].Value),
-                    (variation[2].Key, variation[2].Value),
-                };
-                RemoveConnections(newConnections, connectionsToBreak);
-                result = GetDisconnectedGroupValue(newConnections);
-                if (result > 0)
-                {
-                    break;
-                }
-                variationsChecked++;
-                if (variationsChecked % 100 == 0)
-                {
-                    Console.WriteLine($"{variationsChecked} variations Checked");
-                }
-            }
-            return result;
-        }
-
-        private static void RemoveConnections(List<KeyValuePair<string, string>> connections, List<(string, string)> connectionsToBreak)
-        {
-            List<KeyValuePair<string, string>> connectionsToRemove = new();
-            foreach (var connectionToBreak in connectionsToBreak)
-            {
-                connectionsToRemove.Add(new KeyValuePair<string, string>(connectionToBreak.Item1, connectionToBreak.Item2));
-                connectionsToRemove.Add(new KeyValuePair<string, string>(connectionToBreak.Item2, connectionToBreak.Item1));
-            }
-
-            connections.RemoveAll(x => connectionsToRemove.Contains(x));
-        }
-
-        private static int GetDisconnectedGroupValue(List<KeyValuePair<string, string>> graph)
-        {
-            Dictionary<string, List<string>> ls = new();
-            List<string> nodes = new();
-
-            for (int i = 0; i < graph.Count; i++)
-            {
-                if (!nodes.Contains(graph[i].Key))
-                {
-                    nodes.Add(graph[i].Key);
-                }
-                if (!ls.ContainsKey(graph[i].Key))
-                {
-                    ls.Add(graph[i].Key, new List<string>());
-                }
-                ls[graph[i].Key].Add(graph[i].Value);
-            }
-
-            int totalVisited = 0;
-            List<int> groups = new();
-            List<string> notVisited = nodes.ToList();
-            while (totalVisited < nodes.Count)
-            {
-                var node = notVisited[0];
-                notVisited.RemoveAt(0);
-                var visited = DFS(ls, node, new List<string>());
-                totalVisited += visited.Count;
-                foreach (var visitedNode in visited)
-                {
-                    notVisited.Remove(visitedNode);
-                }
-                groups.Add(visited.Count);
-            }
-            int total = 0;
-            if (groups.Count == 2)
-            {
-                total = groups[0] * groups[1];
-            }else if (groups.Count > 2)
-            {
-                Console.WriteLine($"Oops: {groups.Count}");
-            }
-            return total;
-        }
-
-        private static List<string> DFS(Dictionary<string, List<string>> graph, string currentNode, List<string> visited)
-        {
-            if (visited.Contains(currentNode))
-            {
-                return visited;
-            }
-            visited.Add(currentNode);
-            foreach (var item in graph[currentNode])
-            {
-                DFS(graph, item, visited);
-            }
-            return visited;
-        }
-
-        private static (List<KeyValuePair<string, string>>, List<string>) GetComponents(string[] data)
-        {
-            List<string> nodeNames = new();
-            List<KeyValuePair<string, string>> components = new();
+                Vertices = new()
+            };
             foreach (var line in data)
             {
                 var split = line.Split(": ");
-                string componentA = split[0];
-                nodeNames.Add(componentA);
-                foreach (var componentB in split[1].Split(" "))
+                string srcVerticeName = split[0];
+                foreach (var destVerticeName in split[1].Split(" "))
                 {
-                    nodeNames.Add(componentB);
-                    if (!components.Any(row => row.Key == componentA && row.Value == componentB))
+                    var srcVertice = undirectedGraphObject.Vertices.FirstOrDefault(x => x.Name == srcVerticeName);
+                    if (srcVertice == null)
                     {
-                        components.Add(new KeyValuePair<string, string>(componentA, componentB));
-                        components.Add(new KeyValuePair<string, string>(componentB, componentA));
+                        srcVertice = new Vertex(srcVerticeName);
+                        undirectedGraphObject.Vertices.Add(srcVertice);
+                    }
+                    if (!srcVertice.Edges.Contains(destVerticeName))
+                    {
+                        srcVertice.Edges.Add(destVerticeName);
+                    }
+
+                    var destVertice = undirectedGraphObject.Vertices.FirstOrDefault(x => x.Name == destVerticeName);
+                    if (destVertice == null)
+                    {
+                        destVertice = new Vertex(destVerticeName);
+                        undirectedGraphObject.Vertices.Add(destVertice);
+                    }
+                    if (!destVertice.Edges.Contains(srcVerticeName))
+                    {
+                        destVertice.Edges.Add(srcVerticeName);
                     }
                 }
             }
-            return (components, nodeNames.Distinct().ToList());
+
+            return undirectedGraphObject;
+        }
+
+        public class Kargers
+        {
+            public static int MinCut(UndirectedGraph originalGraph, int samplingCount = 0)
+            {
+                if (originalGraph is null)
+                {
+                    return default;
+                }
+
+                var repeatCount = samplingCount;
+
+                if (repeatCount == 0)
+                {
+                    var numberOfVertices = originalGraph.Vertices.Count;
+                    repeatCount = (int)((2 ^ numberOfVertices) * Math.Log(numberOfVertices));
+                }
+
+                var minCuts = new List<int>(samplingCount);
+
+                while (repeatCount > 0)
+                {
+                    List<Vertex> vertices = new();
+                    foreach (var vertex in originalGraph.Vertices)
+                    {
+                        vertices.Add(new Vertex(vertex.Name)
+                        {
+                            Edges = vertex.Edges.ToList()
+                        });
+                    }
+
+                    while (vertices.Count > 2)
+                    {
+                        var (from, to) = GetRandomEdge(vertices);
+
+                        var fromVertex = vertices.Single(x => x.Name == from);
+                        var toVertex = vertices.Single(x => x.Name == to);
+
+                        fromVertex.MergedVertices.Add(toVertex.Name);
+                        fromVertex.MergedVertices.AddRange(toVertex.MergedVertices);
+
+                        for (var i = 0; i < toVertex.Edges.Count; i++)
+                        {
+                            var vertex = toVertex.Edges[i];
+
+                            if (vertex != from)
+                            {
+                                fromVertex.Edges.Add(vertex);
+                            }
+
+                            var adjacentVertex = vertices.Single(x => x.Name == vertex);
+                            adjacentVertex.Edges.Remove(to);
+
+                            if (vertex != from)
+                            {
+                                adjacentVertex.Edges.Add(from);
+                            }
+                        }
+                        if (!vertices.Remove(toVertex))
+                        {
+                            throw new Exception();
+                        }
+                    }
+
+                    if (vertices.First().Edges.Count == 3)
+                    {
+                        return (vertices.First().MergedVertices.Count + 1) * (vertices.Last().MergedVertices.Count + 1);
+                    }
+                    minCuts.Add(vertices.First().Edges.Count);
+                    repeatCount--;
+                }
+
+                return minCuts.Min();
+            }
+
+            private static (string from, string to) GetRandomEdge(List<Vertex> vertices)
+            {
+                var r = new Random();
+                var from = "";
+                var to = "";
+
+                while (from == to)
+                {
+                    int fromIndex = r.Next(vertices.Count);
+                    Vertex fromVertex = vertices[fromIndex];
+                    from = fromVertex.Name;
+                    int toIndex = r.Next(fromVertex.Edges.Count);
+                    to = fromVertex.Edges[toIndex];
+                }
+                return (from, to);
+            }
+
+            public class Vertex
+            {
+                public Vertex(string name)
+                {
+                    Name = name;
+                }
+                public string Name { get; set; }
+                public List<string> Edges { get; set; } = new();
+                public List<string> MergedVertices { get; set; } = new();
+            }
+
+            public class UndirectedGraph
+            {
+                public List<Vertex> Vertices { get; set; } = new();
+            }
         }
     }
 }
